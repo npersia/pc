@@ -41,7 +41,8 @@ def getIdComercios(lComercios):
 
 
 #devuelve los productos para una lista de Comercios
-#def getProductos(comercios)
+#def getProductos(comercios):
+
 
 
 
