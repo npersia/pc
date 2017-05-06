@@ -40,14 +40,43 @@ def getIdComercios(lComercios):
     return idCom
 
 
-#devuelve los productos para una lista de Comercios
-#def getProductos(comercios):
+#devuelve los productos para una lista de Comercios, maximo para 50 comercios
+def getProductos(comercios):
+    com = str(comercios).replace("'","").replace("[","").replace("]","")
+    offset = 100
+    headers = {"x-api-key": "zIgFou7Gta7g87VFGL9dZ4BEEs19gNYS1SOQZt96","Referer": "https://www.preciosclaros.gob.ar/","Origin": "https://www.preciosclaros.gob.ar/","User-Agent": None}
+    prod = []
+    for x in range(99999):
+        url= "https://d3e6htiiul5ek9.cloudfront.net/prod/productos?string=leche&array_sucursales="+com+"&offset="+str(offset*x)+"&limit="+str(offset)
+        r = requests.get(url,headers=headers)
+        prod.extend(r.json()["productos"])
+        if (offset*x) > int(r.json()["total"]):
+            break
+    return prod
+    
+
+
+#supongo que llegan 21 elementos
+def getProd(comercios):
+    MAX_COMERCIOS = 5
+    if len(comercios) <= MAX_COMERCIOS:
+        print("nada que hacer")
+    else:
+        if len(comercios)%MAX_COMERCIOS > 0:
+            HASTA = (len(comercios)/MAX_COMERCIOS)+1
+        else:
+            HASTA = len(comercios)/MAX_COMERCIOS
+        for x in range(0,int(HASTA)):
+            print(comercios[x*MAX_COMERCIOS:(x+1)*MAX_COMERCIOS])
 
 
 
+#c = getComercios(nivel=3)
+#print(c)
+#idC = getIdComercios(c)
+#print(idC)
+#print(getProductos(idC))
 
 
+getProd([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
 
-c = getComercios(nivel=3)
-print(c)
-print(getIdComercios(c))
