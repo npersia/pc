@@ -66,29 +66,6 @@ def getProductos(comercios):
     return prod
     
 
-
-#devuelve los productos para una lista de Comercios, maximo para 50 comercios
-#def getProductos(comercios):
-#    com = str(comercios).replace("'","").replace("[","").replace("]","")
-#    offset = 100
-#    headers = {"x-api-key": "zIgFou7Gta7g87VFGL9dZ4BEEs19gNYS1SOQZt96","Referer": "https://www.preciosclaros.gob.ar/","Origin": "https://www.preciosclaros.gob.ar/","User-Agent": None}
-#    prod = []
-#    for x in range(99999):
-#        url= "https://d3e6htiiul5ek9.cloudfront.net/prod/productos?array_sucursales="+com+"&offset="+str(offset*x)+"&limit="+str(offset)
-#        r = requests.get(url,headers=headers)
-#        print(r.json()["productos"])
-#        prod.extend(r.json()["productos"])
-#        if (offset*x) > int(r.json()["total"]):
-#            break
-#    return prod
-
-
-
-
-
-
-
-
 #Cuando sean muchos comercios esta funcion sabe partirlos
 def getProd(comercios):
     MAX_COMERCIOS = 50
@@ -152,7 +129,7 @@ def setDB():
 
 
 def setTabComercios(cursor):
-    cursor.execute("CREATE TABLE Comercios (sucursalNombre varchar(255),provincia varchar(255),localidad varchar(255),lng varchar(255),lat varchar(255),sucursalTipo varchar(255),banderaDescripcion varchar(255),comercioId int,distanciaDescripcion varchar(255),comercioRazonSocial varchar(255),sucursalId varchar(255),distanciaNumero double,banderaId int,id varchar(255),direccion varchar(255));")
+    cursor.execute("CREATE TABLE Comercios (sucursalNombre varchar(255),provincia varchar(255),localidad varchar(255),lng varchar(255),lat varchar(255),sucursalTipo varchar(255),banderaDescripcion varchar(255),comercioId int,distanciaDescripcion varchar(255),comercioRazonSocial varchar(255),sucursalId varchar(255),distanciaNumero double,banderaId int,id varchar(255),direccion varchar(255),PRIMARY KEY (id));")
 
 def setComerciosInTab(db,cursor,comercios):
     for c in comercios:
@@ -160,6 +137,9 @@ def setComerciosInTab(db,cursor,comercios):
         try:
             cursor.execute(q)
             db.commit()
+        #con esto no putea cuando hay un valor duplicado
+        except pymysql.err.IntegrityError:
+            pass
         except:
             db.roolback()
 
@@ -167,11 +147,10 @@ def setComerciosInTab(db,cursor,comercios):
 
 
 
-
+#funcionalidad para meter comercios en la base de datos
 c = getComercios(nivel=3)
 print(c)
 db = setDB()
 #setTabComercios(db.cursor())
 setComerciosInTab(db,db.cursor(),c)
-
 db.close()
