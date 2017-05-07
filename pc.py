@@ -106,9 +106,9 @@ def getProd(comercios):
 
 
 
-c = getComercios(nivel=3)
-print(c)
-idC = getIdComercios(c)
+#c = getComercios(nivel=3)
+#print(c)
+#idC = getIdComercios(c)
 #print(idC)
 #print(getProductos(idC))
 #print(len(idC))
@@ -152,31 +152,26 @@ def setDB():
 
 
 def setTabComercios(cursor):
-    cursor.execute("CREATE TABLE Comercios(
-    sucursalNombre varchar(255),
-    provincia varchar(255),
-    localidad varchar(255)
-    lng varchar(255),
-    lat varchar(255),
-    sucursalTipo varchar(255),
-    banderaDescripcion varchar(255),
-    comercioId int,
-    distanciaDescripcion varchar(255),
-    comercioRazonSocial varchar(255),
-    sucursalId varchar(255),
-    distanciaNumero double,
-    banderaId int,
-    id varchar(255),
-    direccion varchar(255)
-    );")
+    cursor.execute("CREATE TABLE Comercios (sucursalNombre varchar(255),provincia varchar(255),localidad varchar(255),lng varchar(255),lat varchar(255),sucursalTipo varchar(255),banderaDescripcion varchar(255),comercioId int,distanciaDescripcion varchar(255),comercioRazonSocial varchar(255),sucursalId varchar(255),distanciaNumero double,banderaId int,id varchar(255),direccion varchar(255));")
 
-
-def setComerciosInTab(cursor,comercios):
+def setComerciosInTab(db,cursor,comercios):
     for c in comercios:
-"INSERT INTO Comercios(sucursalNombre,provincia,localidad,lng,lat,sucursalTipo,banderaDescripcion,comercioId,distanciaDescripcion,comercioRazonSocial,sucursalId,distanciaNumero,banderaId,id,direccion)
-VALUES("+str(c["sucursalNombre"])+","+str(c["provincia"])+","+str(c["localidad"])+","+str(c["lng"])+","+str(c["lat"])+","+str(c["sucursalTipo"])+","+str(c["banderaDescripcion"])+","+str(c["comercioId"])+","+str(c["distanciaDescripcion"])+","+str(c["comercioRazonSocial"])+","+str(c["sucursalId"])+","+str(c["distanciaNumero"])+","+str(c["banderaId"])+","+str(c["id"])+","+str(c["direccion"]))"
+        q = "INSERT INTO Comercios(sucursalNombre,provincia,localidad,lng,lat,sucursalTipo,banderaDescripcion,comercioId,distanciaDescripcion,comercioRazonSocial,sucursalId,distanciaNumero,banderaId,id,direccion) VALUES('"+str(c["sucursalNombre"])+"','"+str(c["provincia"])+"','"+str(c["localidad"])+"','"+str(c["lng"])+"','"+str(c["lat"])+"','"+str(c["sucursalTipo"])+"','"+str(c["banderaDescripcion"])+"','"+str(c["comercioId"])+"','"+str(c["distanciaDescripcion"])+"','"+str(c["comercioRazonSocial"])+"','"+str(c["sucursalId"])+"','"+str(c["distanciaNumero"])+"','"+str(c["banderaId"])+"','"+str(c["id"])+"','"+str(c["direccion"])+"');"
+        try:
+            cursor.execute(q)
+            db.commit()
+        except:
+            db.roolback()
 
 
 
 
 
+
+c = getComercios(nivel=3)
+print(c)
+db = setDB()
+#setTabComercios(db.cursor())
+setComerciosInTab(db,db.cursor(),c)
+
+db.close()
