@@ -143,13 +143,17 @@ def setComerciosInTab(db,cursor,comercios):
         except:
             db.roolback()
 
+    cursor.execute("select * from Comercios;")
+    for r in cursor.fetchall():
+        print(r)
+
 
 
 
 
 #funcionalidad para meter comercios en la base de datos
 c = getComercios(nivel=3)
-print(c)
+#print(c)
 db = setDB()
 #setTabComercios(db.cursor())
 setComerciosInTab(db,db.cursor(),c)
