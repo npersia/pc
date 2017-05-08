@@ -4,7 +4,12 @@ import pymysql
 
 
 
-CONF_DB = {"HOST" : "localhost","USER" : "cp","PASS" : "cp","DB" : "cp"}
+CONF_DB = {"HOST" : "localhost",
+           "USER" : "cp",
+           "PASS" : "cp",
+           "DB" : "cp",
+           "CHARSET" : "utf8mb4",
+           "CURSORCLASS" : pymysql.cursors.DictCursor}
 OFFSET = 30
 EPICENTRO = (-34.5639222,-58.45990419999998)
 HEADERS = {"x-api-key": "zIgFou7Gta7g87VFGL9dZ4BEEs19gNYS1SOQZt96","Referer": "https://www.preciosclaros.gob.ar/","Origin": "https://www.preciosclaros.gob.ar/","User-Agent": None}
@@ -13,7 +18,12 @@ HEADERS = {"x-api-key": "zIgFou7Gta7g87VFGL9dZ4BEEs19gNYS1SOQZt96","Referer": "h
 
 
 def conectDB():
-    return pymysql.connect(CONF_DB["HOST"],CONF_DB["USER"],CONF_DB["PASS"],CONF_DB["DB"])
+    return pymysql.connect(host = CONF_DB["HOST"],
+                           user = CONF_DB["USER"],
+                           password = CONF_DB["PASS"],
+                           db = CONF_DB["DB"],
+                           charset = CONF_DB["CHARSET"],
+                           cursorclass = CONF_DB["CURSORCLASS"])
 
 def createSucursalesTable():
     db = conectDB()
@@ -42,6 +52,14 @@ def setSucursalesInTab(sucursales):
             pass
         except:
             db.roolback()
+    db.close()
+
+
+
+
+
+
+
 
 s = getSucursalesNivel(nivel=0)
 print(s)

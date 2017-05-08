@@ -129,7 +129,7 @@ def setDB():
 
 
 def setTabComercios(cursor):
-    cursor.execute("CREATE TABLE Comercios (sucursalNombre varchar(255),provincia varchar(255),localidad varchar(255),lng varchar(255),lat varchar(255),sucursalTipo varchar(255),banderaDescripcion varchar(255),comercioId int,distanciaDescripcion varchar(255),comercioRazonSocial varchar(255),sucursalId varchar(255),distanciaNumero double,banderaId int,id varchar(255),direccion varchar(255),PRIMARY KEY (id));")
+    cursor.execute("CREATE TABLE Comercios (sucursalNombre varchar(255),provincia varchar(255),localidad varchar(255),lng varchar(255),lat varchar(255),sucursalTipo varchar(255),banderaDescripcion varchar(255),comercioId int,distanciaDescripcion varchar(255),comercioRazonSocial varchar(255),sucursalId varchar(255),distanciaNumero double,banderaId int,id varchar(255),direccion varchar(255));")
 
 def setComerciosInTab(db,cursor,comercios):
     for c in comercios:
