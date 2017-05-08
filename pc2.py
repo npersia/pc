@@ -4,6 +4,26 @@ import pymysql
 
 
 
+CONF_DB = {"HOST" : "localhost","USER" : "cp","PASS" : "cp","DB" : "cp"}
+
+#devuelve los comercios
+def getComercios(epicentro="",nivel=3):
+    offset = 30
+    epic = "lat=-34.5639222&lng=-58.45990419999998"#epicentro
+    headers = {"x-api-key": "zIgFou7Gta7g87VFGL9dZ4BEEs19gNYS1SOQZt96","Referer": "https://www.preciosclaros.gob.ar/","Origin": "https://www.preciosclaros.gob.ar/","User-Agent": None}
+    suc = []
+    for x in range(nivel):
+        url = "https://d3e6htiiul5ek9.cloudfront.net/dev/sucursales?limit="+str(offset)+"&"+epic+"&offset="+str(offset*x)
+        r = requests.get(url,headers=headers)
+        suc.extend(r.json()["sucursales"])
+    return suc
+
+def getIdComercios(lComercios):
+    idCom = []
+    for c in lComercios:
+        idCom.append(c["id"])
+    return idCom
+
 
 
 #ejemplo de conexion y uso de mysql http://www.w3big.com/es/python3/python3-mysql.html
@@ -45,6 +65,40 @@ def setComerciosInTab(db,cursor,comercios):
     cursor.execute("select * from Comercios;")
     for r in cursor.fetchall():
         print(r)
+
+
+
+
+
+
+def setDB():
+    CONF_DB = {"HOST" : "localhost","USER" : "cp","PASS" : "cp","DB" : "cp"}
+    return pymysql.connect("localhost","cp","cp","cp" )
+
+
+def setComerciosTables():
+    db = pymysql.connect(CONF_DB["HOST"],CONF_DB["USER"],CONF_DB["PASS"],CONF_DB["DB"])
+    db.cursor.execute("CREATE TABLE Comercios (sucursalNombre varchar(255),provincia varchar(255),localidad varchar(255),lng varchar(255),lat varchar(255),sucursalTipo varchar(255),banderaDescripcion varchar(255),comercioId int,distanciaDescripcion varchar(255),comercioRazonSocial varchar(255),sucursalId varchar(255),distanciaNumero double,banderaId int,id varchar(255),direccion varchar(255),PRIMARY KEY (id));")
+    db.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
