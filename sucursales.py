@@ -55,15 +55,26 @@ def setSucursalesInTab(sucursales):
     db.close()
 
 
+#siempre cuenta desde 0
+def getIdSucursales(cantidad=0,pagina=0):
+    db = conectDB()
+    q = "SELECT id from Sucursales ORDER BY distanciaNumero LIMIT "+str(cantidad*pagina)+","+str(cantidad)+";"
+    cursor = db.cursor()
+    try:
+        cursor.execute(q)
+        result = cursor.fetchall()
+    finally:
+        db.close()
+    return result
 
 
 
 
-
-
-s = getSucursalesNivel(nivel=0)
-print(s)
-print(len(s))
-createSucursalesTable()
-setSucursalesInTab(s)
-
+#s = getSucursalesNivel(nivel=0)
+#print(s)
+#print(len(s))
+#createSucursalesTable()
+#setSucursalesInTab(s)
+#print()
+#print(getIdSucursales(50,0))
+#print(len(getIdSucursales(50,0)))
