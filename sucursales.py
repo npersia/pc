@@ -12,7 +12,10 @@ CONF_DB = {"HOST" : "localhost",
            "CURSORCLASS" : pymysql.cursors.DictCursor}
 OFFSET = 30
 EPICENTRO = (-34.5639222,-58.45990419999998)
-HEADERS = {"x-api-key": "zIgFou7Gta7g87VFGL9dZ4BEEs19gNYS1SOQZt96","Referer": "https://www.preciosclaros.gob.ar/","Origin": "https://www.preciosclaros.gob.ar/","User-Agent": None}
+HEADERS = {"x-api-key": "zIgFou7Gta7g87VFGL9dZ4BEEs19gNYS1SOQZt96",
+           "Referer": "https://www.preciosclaros.gob.ar/",
+           "Origin": "https://www.preciosclaros.gob.ar/",
+           "User-Agent": None}
 
 
 
