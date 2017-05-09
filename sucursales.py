@@ -73,8 +73,8 @@ def getIdSucursales(cantidad=0,pagina=0):
 
 
 
-s = getSucursalesNivel(nivel=0)
-print(s)
+#s = getSucursalesNivel(nivel=0)
+#print(s)
 #print(len(s))
 #createSucursalesTable()
 #setSucursalesInTab(s)

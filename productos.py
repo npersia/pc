@@ -36,7 +36,7 @@ def getProductosPagina(sucursales,cantidad=CANTIDAD,pagina=0):
     suc = ""
     for x in sucursales:
         suc += x+","
-    suc = suc[-1]
+    suc = suc[:-1]
     url= "https://d3e6htiiul5ek9.cloudfront.net/prod/productos?"+_PRODUCTO+"array_sucursales="+suc+"&offset="+str(cantidad*pagina)+"&limit="+str(cantidad)
     r = requests.get(url,headers=HEADERS)
     return r.json()["productos"]
@@ -53,7 +53,7 @@ def createProductosTable():
 def setProductosInTab(productos):
     db = conectDB()
     for p in productos:
-        q = "INSET INTO Productos(marca,id,nombre,presentacion)VALUES('"+str(p["marca"])+"','"+str(p["id"])+"','"+str(p["nombre"])+"','"+str(p["presentacion"])+"')"
+        q = "INSERT INTO Productos(marca,id,nombre,presentacion)VALUES('"+str(p["marca"])+"','"+str(p["id"])+"','"+str(p["nombre"])+"','"+str(p["presentacion"])+"')"
         try:
             db.cursor().execute(q)
             db.commit()
