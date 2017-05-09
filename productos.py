@@ -10,7 +10,7 @@ CONF_DB = {"HOST" : "localhost",
            "DB" : "cp",
            "CHARSET" : "utf8mb4",
            "CURSORCLASS" : pymysql.cursors.DictCursor}
-OFFSET = 30
+CANTIDAD = 100
 HEADERS = {"x-api-key": "zIgFou7Gta7g87VFGL9dZ4BEEs19gNYS1SOQZt96","Referer": "https://www.preciosclaros.gob.ar/","Origin": "https://www.preciosclaros.gob.ar/","User-Agent": None}
 
 
@@ -28,26 +28,16 @@ def conectDB():
 
 
 
-#
-def getProductos(comercios):
-    com = str(comercios)replace("'","").replace("[","").replace("]","")
-    offset = 100
-    headers = {"x-api-key": "zIgFou7Gta7g87VFGL9dZ4BEEs19gNYS1SOQZt96","Referer": "https://www.preciosclaros.gob.ar/","Origin": "https://www.preciosclaros.gob.ar/","User-Agent": None}
-    prod = []
-
-    x = 0
-    PAGINAS = 1
-    while PAGINAS > x:
-        url= "https://d3e6htiiul5ek9.cloudfront.net/prod/productos?string=leche&array_sucursales="+com+"&offset="+str(offset*x)+"&limit="+str(offset)
-        r = requests.get(url,headers=headers)
-        #print(r.json()["productos"])
-        prod.extend(r.json()["productos"])
-        TOTAL = int(r.json()["total"])
-        if TOTAL%offset > 0:
-            PAGINAS = (TOTAL//offset) + 1
-        else:
-            PAGINAS = (TOTAL//offset)
-        x += 1
-        print(TOTAL)
-    return prod
+#obtiene la cantidad de productos indicada, para una pagina indicada, para la lista de sucursales que se le pasa
+#la lista de sucursales como maximo puede tener 50 sucursales
+#puede traer hasta 100 productos por consulta
+#sucursales es una lista que en cada campo tiene el codigo de sucursal (campo id)
+def getProductos(sucursales,cantidad=CANTIDAD,pagina=0):
+    suc = ""
+    for x in sucursales:
+        suc += x+","
+    suc = suc[-1]
+    url= "https://d3e6htiiul5ek9.cloudfront.net/prod/productos?string=leche&array_sucursales="+suc+"&offset="+str(cantidad*pagina)+"&limit="+str(cantidad)
+    r = requests.get(url,headers=HEADERS)
+    return r.json()["productos"]
 

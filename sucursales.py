@@ -1,7 +1,7 @@
 import requests
 import json
 import pymysql
-
+import sys
 
 
 CONF_DB = {"HOST" : "localhost",
@@ -70,8 +70,8 @@ def getIdSucursales(cantidad=0,pagina=0):
 
 
 
-#s = getSucursalesNivel(nivel=0)
-#print(s)
+s = getSucursalesNivel(nivel=int(sys.argv[1]))
+print(s)
 #print(len(s))
 #createSucursalesTable()
 #setSucursalesInTab(s)
