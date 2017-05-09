@@ -53,7 +53,7 @@ def createProductosTable():
 def setProductosInTab(productos):
     db = conectDB()
     for p in productos:
-         q = "INSET INTO Productos(marca,id,nombre,presentacion)VALUES('"+str(p["marca"])+"','"+str(p["id"])+"','"+str(p["nombre"])+"','"+str(p["presentacion"])+"')"
+        q = "INSET INTO Productos(marca,id,nombre,presentacion)VALUES('"+str(p["marca"])+"','"+str(p["id"])+"','"+str(p["nombre"])+"','"+str(p["presentacion"])+"')"
         try:
             db.cursor().execute(q)
             db.commit()
