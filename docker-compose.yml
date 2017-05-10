@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+    cp_db:
+        image: mysql
+        environment:
+                MYSQL_ROOT_PASSWORD: npersia
+                MYSQL_DATABASE: cp
+                MYSQL_USER: cp
+                MYSQL_PASSWORD: cp
+        ports:
+                - "3306:3306"
+    python:
+        build: .
+        command: /bin/bash
+        volumes:
+                - ./pycode:/files
+        links:
+                - "cp_db:mysqldb"
