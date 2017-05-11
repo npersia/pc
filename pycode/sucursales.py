@@ -4,7 +4,7 @@ import pymysql
 import sys
 
 
-CONF_DB = {"HOST" : "localhost",
+CONF_DB = {"HOST" : "mysqldb",
            "USER" : "cp",
            "PASS" : "cp",
            "DB" : "cp",
@@ -30,7 +30,7 @@ def conectDB():
 
 def createSucursalesTable():
     db = conectDB()
-    db.cursor().execute("CREATE TABLE Sucursales (sucursalNombre varchar(255),provincia varchar(255),localidad varchar(255),lng varchar(255),lat varchar(255),sucursalTipo varchar(255),banderaDescripcion varchar(255),comercioId int,distanciaDescripcion varchar(255),comercioRazonSocial varchar(255),sucursalId varchar(255),distanciaNumero double,banderaId int,id varchar(255),direccion varchar(255),PRIMARY KEY (id));")
+    db.cursor().execute("CREATE TABLE Sucursales (sucursalNombre varchar(255),provincia varchar(255),localidad varchar(255),lng varchar(255),lat varchar(255),sucursalTipo varchar(255),banderaDescripcion varchar(255),comercioId int,distanciaDescripcion varchar(255),comercioRazonSocial varchar(255),sucursalId varchar(255),distanciaNumero double,banderaId int,id varchar(255),direccion varchar(255),PRIMARY KEY (id)) CHARACTER SET utf8 COLLATE utf8_general_ci;")
     db.close()
 
 

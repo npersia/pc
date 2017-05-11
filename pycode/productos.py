@@ -4,7 +4,7 @@ import pymysql
 
 
 
-CONF_DB = {"HOST" : "localhost",
+CONF_DB = {"HOST" : "mysqldb",
            "USER" : "cp",
            "PASS" : "cp",
            "DB" : "cp",
@@ -16,6 +16,7 @@ HEADERS = {"x-api-key": "zIgFou7Gta7g87VFGL9dZ4BEEs19gNYS1SOQZt96","Referer": "h
 _PRODUCTO="string=leche&" #TODO ESTO ES UNA VARIABLE PARA HACER PRUEBAS, BORRAR EN LA VERSION FINAL
 
 
+
 def conectDB():
     return pymysql.connect(host = CONF_DB["HOST"],
                            user = CONF_DB["USER"],
@@ -23,9 +24,6 @@ def conectDB():
                            db = CONF_DB["DB"],
                            charset = CONF_DB["CHARSET"],
                            cursorclass = CONF_DB["CURSORCLASS"])
-
-
-
 
 
 #obtiene la cantidad de productos indicada, para una pagina indicada, para la lista de sucursales que se le pasa
@@ -45,7 +43,7 @@ def getProductosPagina(sucursales,cantidad=CANTIDAD,pagina=0):
 
 def createProductosTable():
     db = conectDB()
-    q = "CREATE TABLE Productos(marca varchar(255),id varchar(255),nombre varchar(255),presentacion varchar(255),PRIMARY KEY (id))"
+    q = "CREATE TABLE Productos(marca varchar(255),id varchar(255),nombre varchar(255),presentacion varchar(255),PRIMARY KEY (id)) CHARACTER SET utf8 COLLATE utf8_general_ci;"
     db.cursor().execute(q)    
     db.close()
 
@@ -53,7 +51,7 @@ def createProductosTable():
 def setProductosInTab(productos):
     db = conectDB()
     for p in productos:
-        q = "INSERT INTO Productos(marca,id,nombre,presentacion)VALUES('"+str(p["marca"])+"','"+str(p["id"])+"','"+str(p["nombre"])+"','"+str(p["presentacion"])+"')"
+        q = "INSERT INTO Productos(marca,id,nombre,presentacion)VALUES('"+str(p["marca"])+"','"+str(p["id"])+"','"+str(p["nombre"])+"','"+str(p["presentacion"])+"');"
         try:
             db.cursor().execute(q)
             db.commit()

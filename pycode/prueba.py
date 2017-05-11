@@ -7,7 +7,6 @@ import productos
 s = sucursales.getSucursalesNivel(nivel=0)
 print(s)
 print(len(s))
-
 sucursales.createSucursalesTable()
 sucursales.setSucursalesInTab(s)
 print()
@@ -20,7 +19,6 @@ for x in q:
     a.extend(x.values())
 
 print(a)
-
 
 
 productos.createProductosTable()
