@@ -17,3 +17,5 @@ services:
                 - ./pycode:/files
         links:
                 - "cp_db:mysqldb"
+        stdin_open: true
+        tty: true
