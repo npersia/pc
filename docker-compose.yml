@@ -11,7 +11,7 @@ services:
         ports:
                 - "3306:3306"
     python:
-        build: .
+        build: ./pycode
         command: /bin/bash
         volumes:
                 - ./pycode:/files
